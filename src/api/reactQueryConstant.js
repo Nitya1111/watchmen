@@ -43,6 +43,8 @@ export const apiUrls = {
   createHallApi: `${prefix}/halls/`,
   updateHallApi: `${prefix}/halls/`,
   shiftListApi: `${prefix}/shift/`,
+  productListApi: `${prefix}/product/`,
+  orderListApi: `${prefix}/product/timeline_record`,
   deleteShiftApi: `${prefix}/shift/`,
   shiftGroupListApi: `${prefix}/shift_group/`,
   machineListApi: `${prefix}/machine/`,
@@ -94,5 +96,7 @@ export const apiUrls = {
   registerUser: `${prefix}/confirmation/registration?token=`,
   getNotificationsApi: `${prefix}/notification/`,
   getProductsApi: `${prefix}/product/`,
-  getProductDeleteApi: `${prefix}/product/`
+  getProductDeleteApi: `${prefix}/product/`,
+  getOrderListApi: `${prefix}/product/timeline_record`,
+  getOrderDeleteApi: `${prefix}/product/timeline_record/`
 };

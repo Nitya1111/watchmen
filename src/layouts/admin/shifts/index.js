@@ -33,7 +33,10 @@ import {
   deleteShiftApi,
   deleteTimelineReasonApi,
   getAdminPanelDataApi,
-  productListApi
+  productListApi,
+  deleteProductApi,
+  getOrderListApi,
+  deleteOrderApi
 } from "api/watchmenApi";
 import DefaultCell from "components/DefaultCell";
 import MDCard from "components/MDCard";
@@ -64,6 +67,7 @@ import {
   setOpenOperatorForm,
   setOpenRatingForm,
   setOpenTimelineRulesForm,
+  setOpenProductForm,
   setSuccessMsg,
   useMaterialUIController
 } from "context";
@@ -74,7 +78,7 @@ import TimelineReasons from "layouts/dashboards/machines/components/modal/addTim
 import moment from "moment";
 import { useMutation, useQuery } from "react-query";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { deleteProductApi } from "api/watchmenApi";
+import AddProduct from "components/modal/addProduct";
 
 export const useStyle = () => ({
   skeleton: {
@@ -100,6 +104,7 @@ function Index() {
   const [energyPriceDeleteConfirm, setEnergyPriceDeleteConfirm] = useState(null);
   const [machineDeleteConfirm, setMachineDeleteConfirm] = useState(null);
   const [productDeleteConfirm, setProductDeleteConfirm] = useState(null);
+  const [orderDeleteConfirm, setOrderDeleteConfirm] = useState(null);
 
   const [tagDeleteConfirm, setTagDeleteConfirm] = useState(null);
   const [updateShift, setUpdateShift] = useState(null);
@@ -125,6 +130,7 @@ function Index() {
   const [timelineReasonList, setTimelineReasonList] = useState([]);
   const [shiftGroupList, setShiftGroupList] = useState([]);
   const [productList, setProductList] = useState([]);
+  const [orderList, setOrderList] = useState([]);
 
   const classes = useStyle();
 
@@ -141,6 +147,7 @@ function Index() {
     openRatingForm,
     openAddEnergyPrice,
     openAddAvaForm,
+    openNewProductForm,
     openTimelineRulesForm
   } = controller;
 
@@ -174,6 +181,18 @@ function Index() {
       enabled: auth.Token && isAuthSet,
       onSuccess: (data) => {
         setProductList(data?.product_list);
+      }
+    }
+  );
+
+  const { isLoading: isOrderLoader, refetch: refetchOrderLoader } = useQuery(
+    "mmm",
+    // [enumQueryNames.ADMIN_PANEL],
+    () => getOrderListApi(axiosPrivate),
+    {
+      enabled: auth.Token && isAuthSet,
+      onSuccess: (data) => {
+        setOrderList(data?.timeline_record_list);
       }
     }
   );
@@ -293,6 +312,25 @@ function Index() {
       }
     } else {
       setProductDeleteConfirm(null);
+    }
+  };
+
+  const deleteOrderHandler = async (confirm) => {
+    if (confirm) {
+      try {
+        const response = await deleteOrderApi(axiosPrivate, orderDeleteConfirm);
+        if (response.status === 1) {
+          setSuccessSB({
+            message: response.message
+          });
+        }
+        setOrderList([...orderList.filter((item) => item.id !== orderDeleteConfirm)]);
+        setOrderDeleteConfirm(null);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setOrderDeleteConfirm(null);
     }
   };
 
@@ -478,7 +516,6 @@ function Index() {
     setOpenTimelineRulesForm(dispatch, !openTimelineRulesForm);
     setTimelineRuleMachineId(value);
   };
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -941,7 +978,7 @@ function Index() {
                       variant={darkMode ? "contained" : "outlined"}
                       color="dark"
                       size="medium"
-                      onClick={() => setOpenNewShiftForm(dispatch, !openNewShiftForm)}
+                      onClick={() => setOpenProductForm(dispatch, !openNewProductForm)}
                     >
                       {translate("Add Product")}
                     </MDButton>
@@ -1039,6 +1076,147 @@ function Index() {
                         }
                       ],
                       rows: productList.sort((a, b) => a.id - b.id)
+                    }}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                  />
+                </AccordionDetails>
+              </Accordion>
+            </Grid>
+          )
+        )}
+        <Grid
+          item
+          xs={12}
+          style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+        >
+          <div style={{ flex: 1, height: "1px", backgroundColor: "#CCCCCC" }}></div>
+          <MDTypography variant="h5" fontWeight="medium" style={{ margin: "0 16px" }}>
+            {translate("Orders")}
+          </MDTypography>
+          <div style={{ flex: 1, height: "1px", backgroundColor: "#CCCCCC" }}></div>
+        </Grid>
+        {isOrderLoader ? (
+          <Skeleton height={200} width="100%" sx={classes.skeleton} />
+        ) : (
+          (userRole === "super_admin" || userRole === "admin") &&
+          orderList && (
+            <Grid item xs={12}>
+              <Accordion
+                darkMode
+                style={{
+                  background: "linear-gradient(195deg, #131313, #282828)",
+                  borderRadius: "0.75rem"
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1-content"
+                  id="panel1-header"
+                >
+                  <MDTypography variant="h5" fontWeight="medium">
+                    {translate("Orders")}
+                  </MDTypography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <MDBox pb={3} display="flex" justifyContent="end">
+                    <MDButton
+                      variant={darkMode ? "contained" : "outlined"}
+                      color="dark"
+                      size="medium"
+                      onClick={() => setOpenNewShiftForm(dispatch, !openNewShiftForm)}
+                    >
+                      {translate("Add Order")}
+                    </MDButton>
+                  </MDBox>
+                  <DataTable
+                    table={{
+                      columns: [
+                        {
+                          Header: "No.",
+                          accessor: "id",
+                          width: "50px",
+                          Cell: ({ row }) => <DefaultCell value={row?.index + 1} />
+                        },
+                        {
+                          Header: translate("ProductID"),
+                          accessor: "product_id",
+                          Cell: ({ value }) => (
+                            <DefaultCell fontSize="14px" fontWeight="medium" value={value} />
+                          )
+                        },
+                        {
+                          Header: translate("MachineID"),
+                          accessor: "machine_id",
+                          Cell: ({ value }) => <DefaultCell value={value} />
+                        },
+                        {
+                          Header: translate("StartDateTime"),
+                          accessor: "start",
+                          Cell: ({ value }) => <DefaultCell value={value} />
+                        },
+                        {
+                          Header: translate("EndDateTime"),
+                          accessor: "end",
+                          Cell: ({ value }) => <DefaultCell value={value} />
+                        },
+                        // {
+                        //   Header: translate("active"),
+                        //   accessor: "active",
+                        //   Cell: ({ row }) => (
+                        //     <Switch
+                        //       checked={row.original.active}
+                        //       onClick={(e) =>
+                        //         chnageShiftStatusHandler(row.original.id, e.target.checked)
+                        //       }
+                        //     />
+                        //   )
+                        // },
+                        // {
+                        //   Header: translate("Shift group"),
+                        //   accessor: "shift_group_list",
+                        //   Cell: ({ value }) => {
+                        //     const names = value.map((item) => item.name);
+                        //     const commaSeparatedNames = names.join(", ");
+                        //     return (
+                        //       <Tooltip title={commaSeparatedNames}>
+                        //         <Box
+                        //           sx={{
+                        //             maxWidth: "40vw",
+                        //             whiteSpace: "nowrap",
+                        //             overflow: "hidden",
+                        //             textOverflow: "ellipsis"
+                        //           }}
+                        //         >
+                        //           {commaSeparatedNames}
+                        //         </Box>
+                        //       </Tooltip>
+                        //     );
+                        //   }
+                        // },
+                        {
+                          Header: "",
+                          id: "icons",
+                          accessor: "id",
+                          align: "right",
+                          isSortedColumn: false,
+                          Cell: ({ value }) => (
+                            <>
+                              <Edit
+                                fontSize="small"
+                                sx={{ margin: "0 10px", cursor: "pointer" }}
+                                onClick={() => editShiftHandler(value)}
+                              />
+                              <Delete
+                                fontSize="small"
+                                sx={{ cursor: "pointer", color: "red !important" }}
+                                onClick={() => setOrderDeleteConfirm(value)}
+                              />
+                            </>
+                          )
+                        }
+                      ],
+                      rows: orderList.sort((a, b) => a.id - b.id)
                     }}
                     entriesPerPage={false}
                     showTotalEntries={false}
@@ -1700,6 +1878,14 @@ function Index() {
           setUpdateShift={setUpdateShift}
         />
       )}
+      {openNewProductForm && (
+        <AddProduct
+          refetch={() => refetchAdminPanel()}
+          setSuccessSB={setSuccessSB}
+          productList={updateShift}
+          setUpdateProduct={setUpdateShift}
+        />
+      )}
       {openNewShiftGroupForm && (
         <NewShiftGroup
           refetch={() => refetchAdminPanel()}
@@ -1839,6 +2025,13 @@ function Index() {
           title="Are you sure you want to delete this Product?"
           open={productDeleteConfirm}
           handleClose={deleteProductReasonHandler}
+        />
+      )}
+      {orderDeleteConfirm && (
+        <ConfirmationDialog
+          title="Are you sure you want to delete this Order?"
+          open={orderDeleteConfirm}
+          handleClose={deleteOrderHandler}
         />
       )}
       <MDSnackbar

@@ -102,6 +102,9 @@ function reducer(state, action) {
     case "OPEN_NEW_USER_FORM": {
       return { ...state, openNewUserForm: action.value };
     }
+    case "OPEN_NEW_PRODUCT_FORM": {
+      return { ...state, openNewProductForm: action.value };
+    }
     case "OPEN_NEW_COMPANY_FORM": {
       return { ...state, openNewCompanyForm: action.value };
     }
@@ -177,6 +180,7 @@ const DefaultInitialState = {
   openNewTagForm: false,
   openNewTimelineReasonForm: false,
   openAddCompanyForm: false,
+  openNewProductForm: false,
   errorMsg: "",
   successMsg: ""
 };
@@ -226,7 +230,9 @@ const setFixedNavbar = (dispatch, value) => dispatch({ type: "FIXED_NAVBAR", val
 const setOpenConfigurator = (dispatch, value) => dispatch({ type: "OPEN_CONFIGURATOR", value });
 const setOpenMachineForm = (dispatch, value) => dispatch({ type: "OPEN_MACHINE_FORM", value });
 const setOpenRatingForm = (dispatch, value) => dispatch({ type: "OPEN_RATING_FORM", value });
-const setOpenTimelineRulesForm = (dispatch, value) => dispatch({ type: "OPEN_TIMELINE_RULES_FORM", value });
+const setOpenTimelineRulesForm = (dispatch, value) =>
+  dispatch({ type: "OPEN_TIMELINE_RULES_FORM", value });
+const setOpenProductForm = (dispatch, value) => dispatch({ type: "OPEN_NEW_PRODUCT_FORM", value });
 const setOpenMachineEditForm = (dispatch, value) =>
   dispatch({ type: "OPEN_MACHINE_EDIT_FORM", value });
 const setOpenNewCompanyForm = (dispatch, value) =>
@@ -271,6 +277,7 @@ export {
   setOpenMachineForm,
   setOpenRatingForm,
   setOpenTimelineRulesForm,
+  setOpenProductForm,
   setOpenMachineEditForm,
   setOpenNewCompanyForm,
   setOpenNewUserForm,

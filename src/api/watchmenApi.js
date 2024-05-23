@@ -277,4 +277,27 @@ export const productListApi = async (axiosInstance) =>
   await axiosInstance.get(`${apiUrls.getProductsApi}`).then(({ data }) => data);
 
 export const deleteProductApi = async (axiosInstance, productId) =>
-  await axiosInstance.delete(`${apiUrls.productListApi}${productId}`).then(({ data }) => data);
+  await axiosInstance.delete(`${apiUrls.getProductDeleteApi}${productId}`).then(({ data }) => data);
+
+export const createProductApi = async (axiosInstance, productPayload) =>
+  await axiosInstance.post(`${apiUrls.productListApi}`, productPayload).then(({ data }) => data);
+
+export const updateProductApi = async (axiosInstance, productId, productPayload) =>
+  await axiosInstance
+    .put(`${apiUrls.productListApi}${productId}`, productPayload)
+    .then(({ data }) => data);
+
+// Order
+export const getOrderListApi = async (axiosInstance) =>
+  await axiosInstance.get(`${apiUrls.getOrderListApi}`).then(({ data }) => data);
+
+export const deleteOrderApi = async (axiosInstance, orderId) =>
+  await axiosInstance.delete(`${apiUrls.getOrderDeleteApi}${orderId}`).then(({ data }) => data);
+
+export const createOrderApi = async (axiosInstance, orderPayload) =>
+  await axiosInstance.post(`${apiUrls.orderListApi}`, orderPayload).then(({ data }) => data);
+
+export const updateOrderApi = async (axiosInstance, orderId, orderPayload) =>
+  await axiosInstance
+    .put(`${apiUrls.orderListApi}${orderId}`, orderPayload)
+    .then(({ data }) => data);
