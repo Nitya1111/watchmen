@@ -1,0 +1,141 @@
+.d_color_box {
+  max-height: 20%;
+  width: 20%;
+  background-color: aqua;
+}
+
+.MachineInfo {
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+@media (max-width: 767px) {
+  #a {
+    order: 1;
+  }
+
+  #b {
+    order: 3;
+  }
+
+  #c {
+    order: 2;
+  }
+
+  .d_box {
+    display: none;
+  }
+
+  .d_box_sm {
+    display: end;
+  }
+
+  /* .card_sm{text-align: center;} */
+}
+
+@media (max-width: 450px) {
+  #a {
+    order: 1;
+  }
+
+  #b {
+    order: 3;
+  }
+
+  #c {
+    order: 2;
+  }
+
+  .d_box {
+    display: none;
+  }
+
+  .d_box_sm {
+    display: block;
+  }
+
+  .card_sm {
+    text-align: end;
+    margin-right: 10% !important;
+  }
+
+  .card_sm_title {
+    text-align: start;
+    margin-right: 10% !important;
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #1c1a1a inset !important;
+  color: white;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: white !important;
+  caret-color: white;
+  border-radius: unset !important;
+}
+
+.rangeselector {
+  margin-bottom: 20px;
+}
+
+.loader-overlay {
+  top: 50%;
+  left: 50%;
+  /* height: 100vh; */
+  width: 100%;
+  z-index: 9999;
+  position: fixed;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.MuiDataGrid-cellContent,
+.MuiDataGrid-columnHeaderTitle,
+.MuiDataGrid-selectedRowCount,
+.MuiToolbar-root.MuiToolbar-gutters,
+.MuiAccordionSummary-content,
+.MuiAccordionSummary-expandIconWrapper,
+.MuiSvgIcon-root.MuiSvgIcon-fontSizeInherit,
+.MuiTableCell-root.MuiTableCell-body.MuiTableCell-sizeMedium,
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.css-h125yc-MuiButtonBase-root-MuiIconButton-root,
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeSmall.css-h125yc-MuiButtonBase-root-MuiIconButton-root
+  svg,
+.css-1xwgyfb-MuiSvgIcon-root,
+.MuiToolbar-gutters.MuiToolbar-regular.MuiTablePagination-toolbar.css-158qfdl-MuiToolbar-root-MuiTablePagination-toolbar {
+  color: white;
+}
+.css-1c35hjw-MuiPaper-root-MuiAccordion-root,
+.css-1wz20g3,
+.css-1ps6pg7-MuiPaper-root,
+.css-1wwfkq7-MuiList-root,
+.css-1086bdv-MuiPaper-root-MuiAccordion-root,
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiAccordion-root.MuiAccordion-rounded.MuiAccordion-gutters
+  .MuiPaper-rounded.MuiPaper-elevation1.MuiAccordion-rounded.Mui-expanded {
+  background: linear-gradient(195deg, #131313, #282828);
+  border-radius: 0.75rem !important;
+}
+.css-154sxbz-MuiPaper-root-MuiDataGrid-paper,
+.MuiDataGrid-panelWrapper.css-1miuj5f-MuiDataGrid-panelWrapper {
+  background: linear-gradient(195deg, #131313, #282828);
+}
