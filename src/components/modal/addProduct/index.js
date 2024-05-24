@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Autocomplete, Box, Chip, FormControl, Modal } from "@mui/material";
+import { axiosPrivate } from "api/axios";
 import { updateProductApi } from "api/watchmenApi";
 import { createProductApi } from "api/watchmenApi";
 import MDBox from "components/MDBox";
@@ -133,7 +134,7 @@ function AddProduct({ setUpdateProduct, productList, refetch }) {
             px={8}
             fontSize="1.25rem"
           >
-            Add Product
+            {productList ? "Update Product" : "Add Product"}
           </MDTypography>
           {errMsg && (
             <MDBox mb={2}>

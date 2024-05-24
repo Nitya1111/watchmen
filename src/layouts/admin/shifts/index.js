@@ -108,6 +108,7 @@ function Index() {
 
   const [tagDeleteConfirm, setTagDeleteConfirm] = useState(null);
   const [updateShift, setUpdateShift] = useState(null);
+  const [updateProduct, setUpdateProduct] = useState(null);
   const [updateShiftGroup, setUpdateShiftGroup] = useState(null);
   const [companyMachines, setCompanyMachines] = useState(null);
   const [editMachineId, setEditMachineId] = useState(null);
@@ -1882,8 +1883,8 @@ function Index() {
         <AddProduct
           refetch={() => refetchAdminPanel()}
           setSuccessSB={setSuccessSB}
-          productList={updateShift}
-          setUpdateProduct={setUpdateShift}
+          updateProduct={updateProduct}
+          setUpdateProduct={setUpdateProduct}
         />
       )}
       {openNewShiftGroupForm && (
