@@ -105,6 +105,9 @@ function reducer(state, action) {
     case "OPEN_NEW_PRODUCT_FORM": {
       return { ...state, openNewProductForm: action.value };
     }
+    case "OPEN_NEW_ORDER_FORM": {
+      return { ...state, openNewOrderForm: action.value };
+    }
     case "OPEN_NEW_COMPANY_FORM": {
       return { ...state, openNewCompanyForm: action.value };
     }
@@ -181,6 +184,7 @@ const DefaultInitialState = {
   openNewTimelineReasonForm: false,
   openAddCompanyForm: false,
   openNewProductForm: false,
+  openNewOrderForm: false,
   errorMsg: "",
   successMsg: ""
 };
@@ -233,6 +237,7 @@ const setOpenRatingForm = (dispatch, value) => dispatch({ type: "OPEN_RATING_FOR
 const setOpenTimelineRulesForm = (dispatch, value) =>
   dispatch({ type: "OPEN_TIMELINE_RULES_FORM", value });
 const setOpenProductForm = (dispatch, value) => dispatch({ type: "OPEN_NEW_PRODUCT_FORM", value });
+const setOpenOrderForm = (dispatch, value) => dispatch({ type: "OPEN_NEW_ORDER_FORM", value });
 const setOpenMachineEditForm = (dispatch, value) =>
   dispatch({ type: "OPEN_MACHINE_EDIT_FORM", value });
 const setOpenNewCompanyForm = (dispatch, value) =>
@@ -278,6 +283,7 @@ export {
   setOpenRatingForm,
   setOpenTimelineRulesForm,
   setOpenProductForm,
+  setOpenOrderForm,
   setOpenMachineEditForm,
   setOpenNewCompanyForm,
   setOpenNewUserForm,

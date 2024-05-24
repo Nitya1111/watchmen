@@ -68,6 +68,7 @@ import {
   setOpenRatingForm,
   setOpenTimelineRulesForm,
   setOpenProductForm,
+  setOpenOrderForm,
   setSuccessMsg,
   useMaterialUIController
 } from "context";
@@ -79,6 +80,7 @@ import moment from "moment";
 import { useMutation, useQuery } from "react-query";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddProduct from "components/modal/addProduct";
+import AddOrder from "components/modal/addOrder";
 
 export const useStyle = () => ({
   skeleton: {
@@ -109,6 +111,8 @@ function Index() {
   const [tagDeleteConfirm, setTagDeleteConfirm] = useState(null);
   const [updateShift, setUpdateShift] = useState(null);
   const [updateProduct, setUpdateProduct] = useState(null);
+  const [updateOrder, setUpdateOrder] = useState(null);
+
   const [updateShiftGroup, setUpdateShiftGroup] = useState(null);
   const [companyMachines, setCompanyMachines] = useState(null);
   const [editMachineId, setEditMachineId] = useState(null);
@@ -149,6 +153,7 @@ function Index() {
     openAddEnergyPrice,
     openAddAvaForm,
     openNewProductForm,
+    openNewOrderForm,
     openTimelineRulesForm
   } = controller;
 
@@ -1125,7 +1130,7 @@ function Index() {
                       variant={darkMode ? "contained" : "outlined"}
                       color="dark"
                       size="medium"
-                      onClick={() => setOpenNewShiftForm(dispatch, !openNewShiftForm)}
+                      onClick={() => setOpenOrderForm(dispatch, !openNewOrderForm)}
                     >
                       {translate("Add Order")}
                     </MDButton>
@@ -1885,6 +1890,14 @@ function Index() {
           setSuccessSB={setSuccessSB}
           updateProduct={updateProduct}
           setUpdateProduct={setUpdateProduct}
+        />
+      )}
+      {openNewOrderForm && (
+        <AddOrder
+          refetch={() => refetchAdminPanel()}
+          setSuccessSB={setSuccessSB}
+          updateOrder={updateOrder}
+          setUpdateOrder={setUpdateOrder}
         />
       )}
       {openNewShiftGroupForm && (
